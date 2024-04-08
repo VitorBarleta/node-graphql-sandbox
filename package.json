@@ -5,7 +5,7 @@
   "main": "index.ts",
   "type": "commonjs",
   "scripts": {
-    "dev": "tsc; node dist/index.js",
+    "dev": "tsc & node dist/index.js",
     "build": "tsc",
     "db": "json-server --watch db/db.json",
     "test": "jest"
