@@ -1,0 +1,20 @@
+{
+  "books": [
+    {
+      "id": "ed18",
+      "title": "Harry Potter and the Prisoner of Azkaban",
+      "authorId": "jk27"
+    },
+    {
+      "id": "a3b6",
+      "title": "Harry Potter and the Philosopher's Stone",
+      "authorId": "jk27"
+    }
+  ],
+  "authors": [
+    {
+      "id": "jk27",
+      "name": "J. K. Rowling"
+    }
+  ]
+}
