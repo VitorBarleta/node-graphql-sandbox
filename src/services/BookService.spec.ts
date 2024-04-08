@@ -2,6 +2,7 @@ import { describe, it, expect, jest, beforeEach } from "@jest/globals";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Book } from "../models/Book";
 import {
+  addAuthor,
   addBook,
   getAuthorById,
   getAuthors,
@@ -180,6 +181,41 @@ describe("BookService", () => {
     postSpy.mockRejectedValueOnce(expectedError);
 
     const result = await addBook({});
+
+    expect(result).toEqual({});
+    expect(postSpy).toHaveBeenCalledTimes(1);
+    expect(consoleWarnSpy).toHaveBeenCalledWith(expectedError);
+  });
+
+  it('should call authors post endpoint and return the author created when success', async () => {
+    const postSpy = jest.spyOn(axios, "post");
+    const authorName = "Robert C. Martin"
+    const expectedResult: Author = {
+      id: "asdf89",
+      name: authorName
+    };
+
+    postSpy.mockResolvedValueOnce({ data: expectedResult });
+
+    const authorToCreate: Partial<Author> = {
+      name: authorName
+    };
+
+    const result = await addAuthor(authorToCreate);
+
+    expect(result).toBe(expectedResult);
+    expect(postSpy).toHaveBeenCalledTimes(1);
+    expect(postSpy).toHaveBeenCalledWith(`${baseUrl}/authors`, authorToCreate);
+  });
+
+  it("should return an empty object when the addAuthor returns an error", async () => {
+    const postSpy = jest.spyOn(axios, "post");
+    const consoleWarnSpy = jest.spyOn(console, 'warn');
+    const expectedError = new AxiosError();
+
+    postSpy.mockRejectedValueOnce(expectedError);
+
+    const result = await addAuthor({});
 
     expect(result).toEqual({});
     expect(postSpy).toHaveBeenCalledTimes(1);

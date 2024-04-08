@@ -1,9 +1,11 @@
 import { describe, it, expect, jest, beforeEach } from "@jest/globals";
-import { RootMutationType, handleAddBook } from "./RootMutationType";
+import { RootMutationType, handleAddAuthor, handleAddBook } from "./RootMutationType";
 import { BookType } from "../types/BookType";
 import { GraphQLNonNull, GraphQLString } from "graphql";
 import * as BookService from "../services/BookService";
 import { Book } from "../models/Book";
+import { AuthorType } from "../types/AuthorType";
+import { Author } from "../models/Author";
 
 describe(RootMutationType.name, () => {
   beforeEach(() => {
@@ -28,6 +30,14 @@ describe(RootMutationType.name, () => {
         },
         resolve: handleAddBook,
       },
+      addAuthor: {
+        type: AuthorType,
+        description: "Adds an Author",
+        args: {
+          name: { type: new GraphQLNonNull(GraphQLString) }
+        },
+        resolve: handleAddAuthor
+      }
     });
   });
 
@@ -47,5 +57,22 @@ describe(RootMutationType.name, () => {
 
     expect(addBookSpy).toHaveBeenCalledWith({ ...request });
     expect(result).toBe(expectedBook);
+  });
+
+  it("should call add author", async () => {
+    const addAuthorSpy = jest.spyOn(BookService, "addAuthor");
+    const request = { name: "My new author" };
+
+    const expectedAuthor: Author = {
+      id: "asd82",
+      name: request.name
+    };
+
+    addAuthorSpy.mockResolvedValueOnce(expectedAuthor);
+
+    const result = await handleAddAuthor(undefined, request);
+
+    expect(addAuthorSpy).toHaveBeenCalledWith({ ...request });
+    expect(result).toBe(expectedAuthor);
   });
 });

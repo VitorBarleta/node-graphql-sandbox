@@ -53,3 +53,13 @@ export async function addBook(book: Partial<Book>): Promise<Book> {
       return {} as Book;
     });
 }
+
+export async function addAuthor(author: Partial<Author>): Promise<Author> {
+  return axios
+    .post<Author>(`${baseUrl}/authors`, author)
+    .then(response => response.data)
+    .catch(err => {
+      console.warn(err);
+      return {} as Author;
+    });
+}
