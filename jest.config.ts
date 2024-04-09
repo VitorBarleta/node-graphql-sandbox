@@ -3,22 +3,16 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from 'jest'
 
 const config: Config = {
   collectCoverage: true,
-  coverageDirectory: "coverage",
-  coveragePathIgnorePatterns: [
-    "/node_modules/"
-  ],
-  coverageProvider: "v8",
+  coverageDirectory: 'coverage',
+  coveragePathIgnorePatterns: ['/node_modules/'],
+  coverageProvider: 'v8',
   preset: 'ts-jest',
-  testMatch: [
-    "**/?(*.)+(spec|test).[t]s?(x)"
-  ],
-  testPathIgnorePatterns: [
-    "/node_modules/"
-  ],
-};
+  testMatch: ['**/?(*.)+(spec|test).[t]s?(x)'],
+  testPathIgnorePatterns: ['/node_modules/'],
+}
 
-export default config;
+export default config
